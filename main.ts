@@ -1,6 +1,11 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.vy = -50
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.forestTiles10, function (sprite, location) {
     game.over(false)
 })
+let mySprite: Sprite = null
+let mySprite3: Sprite = null
 scene.setBackgroundColor(6)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -142,48 +147,10 @@ tiles.setTilemap(tiles.createTilemap(hex`100010000000000000000000000000000000000
     . 2 . . . . . . . . . . . . . . 
     . 2 . . . . . . . . . . . . . . 
     `, [myTiles.transparency16,sprites.castle.tilePath1,sprites.castle.tilePath2,sprites.castle.tilePath3,sprites.builtin.forestTiles0,sprites.builtin.forestTiles10], TileScale.Sixteen))
-let mySprite3 = sprites.create(img`
-    4 4 4 . . 4 4 4 4 4 . . . . . . 
-    4 5 5 4 4 5 5 5 5 5 4 4 . . . . 
-    b 4 5 5 1 5 1 1 1 5 5 5 4 . . . 
-    . b 5 5 5 5 1 1 5 5 1 1 5 4 . . 
-    . b d 5 5 5 5 5 5 5 5 1 1 5 4 . 
-    b 4 5 5 5 5 5 5 5 5 5 5 1 5 4 . 
-    c d 5 5 5 5 5 5 5 5 5 5 5 5 5 4 
-    c d 4 5 5 5 5 5 5 5 5 5 5 1 5 4 
-    c 4 5 5 5 d 5 5 5 5 5 5 5 5 5 4 
-    c 4 d 5 4 5 d 5 5 5 5 5 5 5 5 4 
-    . c 4 5 5 5 5 d d d 5 5 5 5 5 b 
-    . c 4 d 5 4 5 d 4 4 d 5 5 5 4 c 
-    . . c 4 4 d 4 4 4 4 4 d d 5 d c 
-    . . . c 4 4 4 4 4 4 4 4 5 5 5 4 
-    . . . . c c b 4 4 4 b b 4 5 4 4 
-    . . . . . . c c c c c c b b 4 . 
-    `, SpriteKind.Food)
-let mySprite = sprites.create(img`
-    . . . . f f f f f . . . . . . . 
-    . . . f e e e e e f . . . . . . 
-    . . f d d d d e e e f . . . . . 
-    . c d f d d f d e e f f . . . . 
-    . c d f d d f d e e d d f . . . 
-    c d e e d d d d e e b d c . . . 
-    c d d d d c d d e e b d c . f f 
-    c c c c c d d d e e f c . f e f 
-    . f d d d d d e e f f . . f e f 
-    . . f f f f f e e e e f . f e f 
-    . . . . f e e e e e e e f f e f 
-    . . . f e f f e f e e e e f f . 
-    . . . f e f f e f e e e e f . . 
-    . . . f d b f d b f f e f . . . 
-    . . . f d d c d d b b d f . . . 
-    . . . . f f f f f f f f f . . . 
-    `, SpriteKind.Player)
-scene.cameraFollowSprite(mySprite)
-controller.moveSprite(mySprite, 100, 0)
-controller.moveSprite(mySprite, 100, 100)
 info.setLife(3)
 music.playMelody("F D A G B E C E ", 120)
 for (let value of tiles.getTilesByType(sprites.builtin.forestTiles0)) {
+    tiles.setTileAt(tiles.getTileLocation(0, 0), sprites.builtin.forestTiles0)
     mySprite3 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . 6 6 6 6 . . . . . . 
@@ -202,6 +169,107 @@ for (let value of tiles.getTilesByType(sprites.builtin.forestTiles0)) {
         . . . . . . 6 6 6 6 . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Food)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 0))
     tiles.placeOnRandomTile(mySprite3, sprites.builtin.forestTiles0)
-    tiles.setTileAt(tiles.getTileLocation(0, 0), myTiles.transparency16)
 }
+mySprite3 = sprites.create(img`
+    4 4 4 . . 4 4 4 4 4 . . . . . . 
+    4 5 5 4 4 5 5 5 5 5 4 4 . . . . 
+    b 4 5 5 1 5 1 1 1 5 5 5 4 . . . 
+    . b 5 5 5 5 1 1 5 5 1 1 5 4 . . 
+    . b d 5 5 5 5 5 5 5 5 1 1 5 4 . 
+    b 4 5 5 5 5 5 5 5 5 5 5 1 5 4 . 
+    c d 5 5 5 5 5 5 5 5 5 5 5 5 5 4 
+    c d 4 5 5 5 5 5 5 5 5 5 5 1 5 4 
+    c 4 5 5 5 d 5 5 5 5 5 5 5 5 5 4 
+    c 4 d 5 4 5 d 5 5 5 5 5 5 5 5 4 
+    . c 4 5 5 5 5 d d d 5 5 5 5 5 b 
+    . c 4 d 5 4 5 d 4 4 d 5 5 5 4 c 
+    . . c 4 4 d 4 4 4 4 4 d d 5 d c 
+    . . . c 4 4 4 4 4 4 4 4 5 5 5 4 
+    . . . . c c b 4 4 4 b b 4 5 4 4 
+    . . . . . . c c c c c c b b 4 . 
+    `, SpriteKind.Food)
+mySprite = sprites.create(img`
+    . . . . f f f f f . . . . . . . 
+    . . . f e e e e e f . . . . . . 
+    . . f d d d d e e e f . . . . . 
+    . c d f d d f d e e f f . . . . 
+    . c d f d d f d e e d d f . . . 
+    c d e e d d d d e e b d c . . . 
+    c d d d d c d d e e b d c . f f 
+    c c c c c d d d e e f c . f e f 
+    . f d d d d d e e f f . . f e f 
+    . . f f f f f e e e e f . f e f 
+    . . . . f e e e e e e e f f e f 
+    . . . f e f f e f e e e e f f . 
+    . . . f e f f e f e e e e f . . 
+    . . . f d b f d b f f e f . . . 
+    . . . f d d c d d b b d f . . . 
+    . . . . f f f f f f f f f . . . 
+    `, SpriteKind.Player)
+scene.cameraFollowSprite(mySprite)
+controller.moveSprite(mySprite, 0, 0)
+controller.moveSprite(mySprite, 100, 100)
+game.onUpdate(function () {
+    mySprite.setImage(img`
+        . . . . f f f f f . . . . . . . 
+        . . . f e e e e e f . . . . . . 
+        . . f d d d d e e e f . . . . . 
+        . c d f d d f d e e f f . . . . 
+        . c d f d d f d e e d d f . . . 
+        c d e e d d d d e e b d c . . . 
+        c d d d d c d d e e b d c . f f 
+        c c c c c d d d e e f c . f e f 
+        . f d d d d d e e f f . . f e f 
+        . . f f f f f e e e e f . f e f 
+        . . . . f e e e e e e e f f e f 
+        . . . f e f f e f e e e e f f . 
+        . . . f e f f e f e e e e f . . 
+        . . . f d b f d b f f e f . . . 
+        . . . f d d c d d b b d f . . . 
+        . . . . f f f f f f f f f . . . 
+        `)
+    if (mySprite.vy < 0) {
+        mySprite.setImage(img`
+            . . . . f f f f f . . . . . . . 
+            . . . f e e e e e f . . . . . . 
+            . . f d d d d e e e f . . . . . 
+            . c d f d d f d e e f . . . . . 
+            . c d f d d f d e e f f . . . . 
+            c d e e d d d d e e d d f . . . 
+            c d d d d c d d e e b d c . . . 
+            c c c c c d d e e e b d c . f f 
+            . f d d d d e e e f f c . f e f 
+            . f f f f f f e e e e f . f e f 
+            . f f f f e e e e e e e f f e f 
+            f d d f d d f e f e e e e f f . 
+            f d b f d b f e f e e e e f . . 
+            f f f f f f f f f f f f e f . . 
+            . . . . . . . . . f c d d f . . 
+            . . . . . . . . . . f f f f . . 
+            `)
+    } else if (mySprite.vy < 0) {
+        mySprite.setImage(img`
+            . . . . f f f f f . . . . . . . 
+            . . . f e e e e e f f f . . . . 
+            . . f d d d e e e e d d f . . . 
+            . c d d d d d e e e b d c . . . 
+            . c d d d d d d e e b d c . . . 
+            c d d f d d f d e e f c . f f . 
+            c d d f d d f d e e f . . f e f 
+            c d e e d d d d e e f . . f e f 
+            . f d d d c d e e f f . . f e f 
+            . . f f f d e e e e e f . f e f 
+            . . . . f e e e e e e e f f f . 
+            . . . . f f e e e e e b f f . . 
+            . . . f e f f e e c d d f f . . 
+            . . f d d b d d c f f f . . . . 
+            . . f d d c d d d f f . . . . . 
+            . . . f f f f f f f . . . . . . 
+            `)
+    }
+    if (mySprite.vx < 0) {
+        mySprite.image.flipX()
+    }
+})
